@@ -15,6 +15,8 @@
  A ContentView view that creates a GameSettings object, has a button to add 1 to its score property, and a NavigationLink to show the detail view.
  Here’s the code:
  */
+import SwiftUI
+import PlaygroundSupport
 	// Our observable object class
 class GameSettings: ObservableObject {
 	@Published var score = 0

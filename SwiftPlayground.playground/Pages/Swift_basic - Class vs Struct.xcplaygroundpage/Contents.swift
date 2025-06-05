@@ -1,7 +1,7 @@
  //: [Previous](@previous)
 /*:
  # Class Vs Struct
- ###          Both structures and classes in Swift can:
+ ### Both structures and classes in Swift can:
 
  - **Define Properties:** Store values.
  - **Define Methods:** Provide functionality.

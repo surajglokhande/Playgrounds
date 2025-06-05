@@ -33,7 +33,7 @@ struct Stack<T> {
 		debugPrint("pop :\(array)")
 	}
 }
-var obj = Stack(array: [1,2,3,4,5]) //OR var obj = Stack<Double>(array: [1.5,2.5,3.5,4.5,5.5]) //OR var obj = Stack(array: [1.5,2.5,3.5,4.5,5.5])
+var obj = Stack(array: [1,2,3,4,5.1]) //OR var obj = Stack<Double>(array: [1.5,2.5,3.5,4.5,5.5]) //OR var obj = Stack(array: [1.5,2.5,3.5,4.5,5.5])
 obj.push(6)
 obj.pop()
 /*:
@@ -154,26 +154,26 @@ debugPrint(containerObj.max() ?? 0)
  ## Where clause
  You can restrict the type using put "where clause"
  */
-extension Container where T == Int {
-	func Avarage() -> T {
-		var sum = 0
-		sum = items.reduce(0, { x, y in
-			x+y
-		})
-		return sum/items.count
-	}
-}
-debugPrint(containerObj.Avarage())
-func merge<container1: ContainerType, container2: ContainerType>(c1: container1, c2: container2) -> any ContainerType where container1.Item == container2.Item {
-	var mergedArray: [container1.Item] = []
-	for item in c1.items {
-		mergedArray.append(item)
-	}
-	for item in c2.items {
-		mergedArray.append(item)
-	}
-	let container = Container(items: mergedArray)
-	return container
-}
-debugPrint(merge(c1: containerObj, c2: containerObj2))
+//extension Container where T == Int {
+//	func Avarage() -> T {
+//		var sum = 0
+//		sum = items.reduce(0, { x, y in
+//			x+y
+//		})
+//		return sum/items.count
+//	}
+//}
+//debugPrint(containerObj.Avarage())
+//func merge<container1: ContainerType, container2: ContainerType>(c1: container1, c2: container2) -> any ContainerType where container1.Item == container2.Item {
+//	var mergedArray: [container1.Item] = []
+//	for item in c1.items {
+//		mergedArray.append(item)
+//	}
+//	for item in c2.items {
+//		mergedArray.append(item)
+//	}
+//	let container = Container(items: mergedArray)
+//	return container
+//}
+//debugPrint(merge(c1: containerObj, c2: containerObj2))
 //: [Next](@next)

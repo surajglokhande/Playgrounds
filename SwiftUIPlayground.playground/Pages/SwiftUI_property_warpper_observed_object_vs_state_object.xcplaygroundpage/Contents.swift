@@ -7,6 +7,8 @@
  @StateObject and @ObservedObject have similar features, but they differ in how SwiftUI manages their lifecycle. Use the state object property wrapper to ensure consistent results when the current view creates the observed object. Use @ObservedObject when injecting an observed object as a dependency.
 
  */
+import SwiftUI
+import PlaygroundSupport
 final class CounterViewModel: ObservableObject {
 	@Published var count = 0
 	var name: String = ""

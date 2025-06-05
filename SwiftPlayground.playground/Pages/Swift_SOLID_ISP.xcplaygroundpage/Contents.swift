@@ -1,9 +1,7 @@
 //: [Previous](@previous)
 /*:
  ## Interface Segregation Principle (ISP):
- The ISP states that clients should not be forced to depend on interfaces they do not use.to avoid unnecessary dependencies.
-
- no code should be forced to depend on methods it does not use.
+ The ISP states that clients should not be forced to depend on interfaces they do not use. It promotes the idea of creating focused, cohesive interfaces, tailored to the specific needs of clients, to avoid unnecessary dependencies.
  */
 struct Document {
 

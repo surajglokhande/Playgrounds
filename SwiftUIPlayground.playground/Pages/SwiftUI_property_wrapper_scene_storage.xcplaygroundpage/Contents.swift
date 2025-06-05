@@ -3,6 +3,8 @@
  ## @SceneStorage
  @SceneStorage is a property wrapper introduced in SwiftUI for managing the state of a view across different scenes in a multi-window or multi-device environment. It’s particularly useful for preserving the state of a view when it moves between scenes, such as when the user switches between different windows or devices.
  */
+import SwiftUI
+import PlaygroundSupport
 struct SceneContentView: View {
 	@SceneStorage("isDarkModeOn") private var isDarkModeOn = true
 

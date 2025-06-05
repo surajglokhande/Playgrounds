@@ -10,9 +10,9 @@ struct SwiftUI_background_overlays: View {
             Text("SwiftUI_background")
                 .font(.system(size: 20))
                 .fontWeight(.bold)
-                .foregroundStyle(.white)
+                .foregroundStyle(.green)
                 .multilineTextAlignment(.center)
-                .frame(width: 200, height: 200)
+                .frame(width: 200, height: 100)
                 .background(.blue, in: .circle)
 
 

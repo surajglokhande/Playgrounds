@@ -4,9 +4,6 @@
         <page name='Swift Programming Language'/>
         <page name='Test Demo'/>
         <page name='OperationQueue'/>
-        <page name='Generic'/>
-        <page name='Associated Type'/>
-        <page name='Opaque Type'/>
         <page name='SwiftUI_property_wrapper'/>
         <page name='Shapes SwiftUI'/>
         <page name='OffSet SwiftUI'/>

@@ -16,6 +16,8 @@
 
  Tip: You can use @State to track reference types if you want, you just won’t be notified when they change. This is particularly helpful for classes that don’t conform to the ObservableObject protocol.
  */
+import SwiftUI
+import PlaygroundSupport
 struct StateContentView: View {
 	@State private var username: String? = "Suraj"
 

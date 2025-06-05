@@ -1,37 +1,36 @@
-//: [Previous](@previous)
-
-import Foundation
-
-/*class Vehicle {
-	func move() {
-		print("Moving")
-	}
-}
-
-class Car: Vehicle {
-	func honk() {
-		print("Honking")
-	}
-}
-
-class Bicycle: Vehicle {
-	func ringBell() {
-		print("Ringing bell")
-	}
-}
-
-	//USAGE
-let car = Car()
-let bike = Bicycle()
-var vehicle: Vehicle
-
-vehicle = car
-vehicle.move() // Output: "Moving"
-
-vehicle = bike
-vehicle.move() // Output: "Moving"
- */
-
+////: [Previous](@previous)
+//
+//import Foundation
+//
+////class Vehicle {
+////	func move() {
+////		print("Moving")
+////	}
+////}
+////
+////class Car: Vehicle {
+////	func honk() {
+////		print("Honking")
+////	}
+////}
+////
+////class Bicycle: Vehicle {
+////	func ringBell() {
+////		print("Ringing bell")
+////	}
+////}
+////
+////	//USAGE
+////let car = Car()
+////let bike = Bicycle()
+////var vehicle: Vehicle
+////
+////vehicle = car
+////vehicle.move() // Output: "Moving"
+////
+////vehicle = bike
+////vehicle.move() // Output: "Moving"
+//
 //class Rectangle {
 //	var width: Int
 //	var height: Int
@@ -82,6 +81,8 @@ vehicle.move() // Output: "Moving"
 //main()
 //
 ////: [Next](@next)
+
+import Foundation
 
 
 //struct Demo1 {
@@ -178,41 +179,55 @@ vehicle.move() // Output: "Moving"
 //	print("false")
 //}
 
-func demo() {
-//	var x = 14
-//	print(x)
-//	var y = x
-//	y = 5
-//	print(x)
-//	print(y)
+//func demo() {
+////	var x = 14
+////	print(x)
+////	var y = x
+////	y = 5
+////	print(x)
+////	print(y)
 //    let twoThousand: UInt16 = 2_000
 //    let one: UInt8 = 1
 //    let twoThousandAndOne = twoThousand + UInt16(one) // Explicit conversion
 //    print(twoThousandAndOne)
-    
-    
-    
-    enum STR {
-        case One
-        case Two
-        case THREE
-    }
-    
-    var str: STR
-    str = .THREE
-    var str2 = "One"
-    
-    switch str {
-    case .One:
-        print("one")
-    case .Two:
-        print("two")
-    @unknown default:
-        print("default")
+//}
+//
+//demo()
+
+protocol Root {
+    func method()
+}
+
+extension Root {
+    func method() {
+        print("Method from Root")
     }
 }
 
-demo()
+protocol ChildA: Root {}
+
+extension ChildA {
+    func method() {
+        print("Method from ChildA")
+    }
+}
+
+protocol ChildB: Root {}
+
+extension ChildB {
+    func method() {
+        print("Method from ChildB")
+    }
+}
+
+class MyClass: ChildA, ChildB {
+    func method() {
+        print("Method from Cmy class")
+    }
+}
+
+var obj = MyClass()
+obj.method()
 
 
 

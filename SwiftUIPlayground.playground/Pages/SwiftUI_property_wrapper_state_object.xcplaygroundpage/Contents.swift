@@ -9,6 +9,8 @@
 
  **Important**: You should use @StateObject only once per object, which should be in whichever view is responsible for creating the object. All other views that share your object should use @ObservedObject.
  */
+import SwiftUI
+import PlaygroundSupport
 class User: ObservableObject {
 	@Published var username = "suraj96tm" // if not write @Publish username will not changed on click me!
 }

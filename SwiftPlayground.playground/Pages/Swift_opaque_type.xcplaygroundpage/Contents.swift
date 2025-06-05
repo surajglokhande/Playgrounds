@@ -101,7 +101,9 @@ feedWithSome()
 var arrayOne: [any Animal] = [Chicken(name: ""), Lion(name: ""), Cow(name: "")]
 var arrayTwo: [some Animal] = [Chicken(name: ""), Chicken(name: ""), Chicken(name: "")]
 //var arrayThree: [some Animal] = [Chicken(name: ""), Lion(name: ""), Cow(name: "")]// error
-
+/*:
+	Showing no error in getAddition() and getAppend() because we dont used associatedtype type so no used of Opaquetype
+ */
 protocol AppendValueAnother {
 	//associatedtype item
 	var startingValue: Int { get set }

@@ -105,7 +105,7 @@ class SomeClass {
 struct SomeStruct {
 	var x = 10
 	mutating func doSomething() {
-//        someFunctionWithEscapingClosure { x = 100 } //Escaping closure captures mutating 'self' parameter
+		//someFunctionWithEscapingClosure { x = 100 } //Escaping closure captures mutating 'self' parameter
 		someFunctionWithNonescapingClosure { self.x = 200 }
 	}
 }
@@ -117,9 +117,7 @@ completionHandlers.first?()
 print(instance.x)
 	// Prints "100"
 
-var obj = SomeStruct()
-obj.doSomething()
-print(obj.x)
+
 /*:
 ## Autoclosures
 An autoclosure is a closure that’s automatically created to wrap an expression that’s being passed as an argument to a function. It doesn’t take any arguments, and when it’s called, it returns the value of the expression that’s wrapped inside of it. This syntactic convenience lets you omit braces around a function’s parameter by writing a normal expression instead of an explicit closure.

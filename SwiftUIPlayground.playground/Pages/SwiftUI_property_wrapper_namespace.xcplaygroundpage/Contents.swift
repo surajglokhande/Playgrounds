@@ -3,6 +3,8 @@
  ## @Namespace
  @Namespace is a property wrapper provided by SwiftUI that allows you to synchronize the namespace of matched views for use in animations. It’s commonly used in conjunction with matchedGeometryEffect to create smooth transitions between views when their positions or sizes change.
  */
+import SwiftUI
+import PlaygroundSupport
 struct NamespaceContentView: View {
 	@State private var isFlipped = false
 	@Namespace private var namespace

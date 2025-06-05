@@ -7,6 +7,8 @@
 /*:
  For example, you can read the color scheme value and automatically get your view updated when the color scheme changes:
  */
+import SwiftUI
+import PlaygroundSupport
 struct ColorSchemeView: View {
 	@Environment(\.colorScheme) private var colorScheme
 

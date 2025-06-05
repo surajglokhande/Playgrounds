@@ -1,5 +1,5 @@
 //[Previous](@previous)
-/*::
+/*:
  # Type Safety and Type Inference in Swift
 
  ## Type Safety
@@ -17,4 +17,5 @@
  ```
  let anotherPi = 3 + 0.14159 // Inferred as Double
  ```
-[Next](@next)
+ */
+//[Next](@next)

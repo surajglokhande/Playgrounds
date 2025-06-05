@@ -13,6 +13,8 @@
 /*:
  Example One
  */
+import SwiftUI
+import PlaygroundSupport
 class UserProgress: ObservableObject {
 	@Published var score = 0
 }
