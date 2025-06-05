@@ -13,10 +13,10 @@
  let s2 = FixedLengthStruct(firstValue: 3, length: 4)
 
  s1.firstValue = 10
- s1.length = 20 //Cannot assign to property: 'length' is a 'let' constant
+// s1.length = 20 //Cannot assign to property: 'length' is a 'let' constant
 
- s2.firstValue = 30 //Cannot assign to property: 's2' is a 'let' constant
- s2.length = 40 //Cannot assign to property: 'length' is a 'let' constant
+// s2.firstValue = 30 //Cannot assign to property: 's2' is a 'let' constant
+// s2.length = 40 //Cannot assign to property: 'length' is a 'let' constant
 
  // Reference Types (Classes):
  class FixedLengthClass {
@@ -27,10 +27,10 @@
  let c2 = FixedLengthClass()
 
  c1.firstValue = 10
- c1.length = 20 //Cannot assign to property: 'length' is a 'let' constant
+// c1.length = 20 //Cannot assign to property: 'length' is a 'let' constant
 
  c2.firstValue = 30
- c2.length = 40 //Cannot assign to property: 'length' is a 'let' constant
+// c2.length = 40 //Cannot assign to property: 'length' is a 'let' constant
 /*:
  ## Computed Properties:
 - Computed properties don't store a value directly but rather provide a getter and an optional setter to retrieve and set other properties indirectly
