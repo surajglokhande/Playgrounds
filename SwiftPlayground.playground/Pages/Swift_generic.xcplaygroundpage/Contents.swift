@@ -43,7 +43,8 @@ It's sometimes useful to enforce certain type constraint on the types that can b
 
 	Generic Constraints One
 */
-/*protocol ContainerType {
+/*
+ protocol ContainerType {
 	associatedtype Item
 	var items: [Item] { get }
 	var count: Int { get }
@@ -101,7 +102,9 @@ debugPrint(containerObj.max() ?? 0)
  */
 /*:
  ## Protocol Composition
- ### let's consider above example
+ protocol composition is a powerful feature that allows you to combine multiple protocols into a single name. This can be very useful when you want to define a type that needs to adhere to multiple protocols simultaneously.
+    
+    let's consider above example
 */
 typealias ConstraintType = Comparable & Equatable
 
