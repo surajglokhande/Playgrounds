@@ -43,7 +43,9 @@ class SavingsAccount: Account {
 /*:
  **convenience init: The Shortcut Initializer**
  
- Imagine now that the bank offers a special service: if you don’t want to fill out all the forms, they can automatically fill them in based on your existing account. *This is what a convenience init does. It’s a secondary initializer that provides a shortcut, often filling in default values or calling another initializer to do most of the work.*
+ Imagine now that the bank offers a special service: if you don’t want to fill out all the forms, they can automatically fill them in based on your existing account.
+ 
+ *This is what a convenience init does. It’s a secondary initializer that provides a shortcut, often filling in default values or calling another initializer to do most of the work.*
  */
 class NormalBankAccount {
     var name: String
