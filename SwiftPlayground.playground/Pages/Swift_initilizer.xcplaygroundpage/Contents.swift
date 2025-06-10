@@ -1,5 +1,6 @@
 //: [Previous](@previous)
 /*:
+ # Initilization
  **init: The Standard Initializer**
  
  Let’s Imagine you're opening a new savings account at a bank. The bank needs some basic information: your name and the initial deposit. *This is like the standard init in Swift—it’s the default way to set up an object with all the necessary details.*
@@ -34,13 +35,17 @@ class SavingsAccount: Account {
         self.interestRate = interestRate
         super.init(id: id)
     }
+    
+    required init(id: String) {
+        fatalError("init(id:) has not been implemented")
+    }
 }
 /*:
  **convenience init: The Shortcut Initializer**
  
  Imagine now that the bank offers a special service: if you don’t want to fill out all the forms, they can automatically fill them in based on your existing account. *This is what a convenience init does. It’s a secondary initializer that provides a shortcut, often filling in default values or calling another initializer to do most of the work.*
  */
-class BankAccount {
+class NormalBankAccount {
     var name: String
     var balance: Double
     
@@ -53,13 +58,17 @@ class BankAccount {
         self.init(name: name, balance: 0.0)
     }
 }
+
+var surajAccount = NormalBankAccount(name: "Suraj")
+surajAccount.name
+surajAccount.balance
 /*:
  **super init: The Inherited Initializer**
  
  Finally, let’s say you’re opening an account at a specific branch, and this branch needs to do everything the main bank does, plus a little extra, like offering you a welcome bonus. The super init is like making sure that the branch’s special steps come after the main bank’s steps.
  
  */
-class SpecialAccount: BankAccount {
+class SpecialAccount: NormalBankAccount {
     var bonus: Double
     
     init(name: String, balance: Double, bonus: Double) {
@@ -67,4 +76,6 @@ class SpecialAccount: BankAccount {
         super.init(name: name, balance: balance + bonus)
     }
 }
+
+var dhirajAccount = SpecialAccount(name: "dhiraj", balance: 100.0, bonus: 50.0)
 //: [Next](@next)
