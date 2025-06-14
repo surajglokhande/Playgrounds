@@ -1,9 +1,8 @@
 //: [Previous](@previous)
 /*:
 # associatedtype
-Associated types are used in swift protocols to define generic placeholders for the types used within the protocols. These placeholders enable protocols to declare requirements without specifying the concrete types themselves.
-
-	associatedtype
+- Associated types are used in swift protocols to define generic placeholders for the types used within the protocols.
+- These placeholders enable protocols to declare requirements without specifying the concrete types themselves.
  */
 protocol AppendValue {
 	associatedtype item

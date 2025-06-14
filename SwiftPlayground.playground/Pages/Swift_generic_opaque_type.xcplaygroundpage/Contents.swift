@@ -1,12 +1,10 @@
 //: [Previous](@previous)
 /*:
 # Opaquetype
- Opaque types allow you to describe the expected return type without defining a concrete type.
- They hide the implementation details and expose only the behavior that complies with the protocol.
- They help improve the type safety of your Swift code.
- They allow you to use generic code and still return specific types.
-
-	Opaquetype
+ - Opaque types allow you to describe the expected return type without defining a concrete type.
+ - They hide the implementation details and expose only the behavior that complies with the protocol.
+ - They help improve the type safety of your Swift code.
+ - They allow you to use generic code and still return specific types.
  */
 protocol AppendValue {
 	associatedtype item
