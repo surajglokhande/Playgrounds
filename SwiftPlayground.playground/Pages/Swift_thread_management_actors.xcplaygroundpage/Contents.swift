@@ -107,6 +107,152 @@ actor BankAccount {
         return balance
     }
 }
+/*:
+ Another Example of Actor
+ */
+// MARK: - Simple Test Harness for Playground
+
+/// A basic function to run a test and print its result.
+/// This simulates a test case for a Playground environment.
+func runTest(named testName: String, _ testBlock: @escaping () async -> Bool) async {
+    print("--- Running Test: \(testName) ---")
+    let success = await testBlock()
+    if success {
+        print("✅ PASSED: \(testName)")
+    } else {
+        print("❌ FAILED: \(testName)")
+    }
+    print("----------------------------------\n")
+}
+
+// MARK: - Concurrent Counter Implementations
+
+/// Represents a counter that is NOT thread-safe.
+/// Multiple concurrent access attempts will likely lead to a race condition.
+class UnsafeCounterOne {
+    var count: Int = 0
+
+    /// Increments the counter. This operation is not atomic.
+    func increment() {
+        // Simulate some work or context switching that could lead to a race condition
+        let currentCount = count
+        // A very small delay to increase the chance of race condition in Playground
+        // In real-world, this happens without explicit delays.
+        // Thread.sleep(forTimeInterval: 0.000001)
+        count = currentCount + 1
+        print("count: \(count)")
+    }
+}
+
+/// Represents a counter that IS thread-safe using Swift's `actor`.
+/// Actors ensure that mutable state within them is accessed serially, preventing race conditions.
+actor SafeCounterOne {
+    var count: Int = 0
+
+    /// Increments the counter. Because this is an `actor`, this method is implicitly isolated
+    /// and ensures that only one task can modify `count` at a time.
+    func increment() {
+        count += 1
+    }
+
+    /// A synchronous method to get the current count.
+    /// This is necessary because `count` itself is part of the actor's isolated state.
+    func currentCount() -> Int {
+        return count
+    }
+}
+
+// MARK: - Concurrency Test Cases
+
+/// Test case for the `UnsafeCounter` to demonstrate a race condition.
+/// We expect this test to fail (i.e., the final count will not be 10,000) due to concurrent updates.
+func testUnsafeCounterConcurrency() async -> Bool {
+    let unsafeCounter = UnsafeCounterOne()
+    let numberOfIncrements = 10_000
+    let numberOfTasks = 100 // Spawning multiple tasks
+
+    // Create an array of tasks that will concurrently increment the counter
+    var tasks: [Task<Void, Never>] = []
+    for _ in 0..<numberOfTasks {
+        let task = Task {
+            // Each task will increment the counter multiple times
+            for _ in 0..<(numberOfIncrements / numberOfTasks) {
+                unsafeCounter.increment()
+            }
+        }
+        tasks.append(task)
+    }
+
+    // Wait for all tasks to complete
+    for task in tasks {
+        await task.value // Await each task to ensure completion
+    }
+
+    // Check if the final count is as expected
+    // Due to race conditions, it's highly probable this will NOT be true.
+    let expectedCount = numberOfIncrements
+    let finalCount = unsafeCounter.count
+    print("Unsafe Counter: Expected \(expectedCount), Got \(finalCount)")
+
+    return finalCount == expectedCount
+}
+
+/// Test case for the `SafeCounter` (actor) to demonstrate thread safety.
+/// We expect this test to pass (i.e., the final count will be 10,000) because the actor handles concurrency safely.
+func testSafeCounterConcurrency() async -> Bool {
+    let safeCounter = SafeCounterOne()
+    let numberOfIncrements = 10_000
+    let numberOfTasks = 100 // Spawning multiple tasks
+
+    // Create an array of tasks that will concurrently increment the actor's counter
+    var tasks: [Task<Void, Never>] = []
+    for _ in 0..<numberOfTasks {
+        let task = Task {
+            // Each task will increment the actor's counter multiple times
+            // The `await` keyword is crucial here because `increment()` is an async actor method.
+            for _ in 0..<(numberOfIncrements / numberOfTasks) {
+                await safeCounter.increment()
+            }
+        }
+        tasks.append(task)
+    }
+
+    // Wait for all tasks to complete
+    for task in tasks {
+        await task.value // Await each task to ensure completion
+    }
+
+    // Check if the final count is as expected.
+    // Because `currentCount()` is an async actor method, we must `await` it.
+    let expectedCount = numberOfIncrements
+    let finalCount = await safeCounter.currentCount()
+    print("Safe Counter: Expected \(expectedCount), Got \(finalCount)")
+
+    return finalCount == expectedCount
+}
+
+// MARK: - Run All Tests
+
+// The top-level code in a Swift Playground implicitly runs in an asynchronous context
+// if it contains `await` calls.
+Task {
+    await runTest(named: "Unsafe Counter Race Condition Test", testUnsafeCounterConcurrency)
+    await runTest(named: "Safe Counter (Actor) Concurrency Test", testSafeCounterConcurrency)
+}
+
+/*
+Expected Output in the Playground Console (the 'Unsafe' test might vary slightly but will likely fail):
+
+--- Running Test: Unsafe Counter Race Condition Test ---
+Unsafe Counter: Expected 10000, Got 9978 // This number will likely be less than 10000 and vary
+❌ FAILED: Unsafe Counter Race Condition Test
+----------------------------------
+
+--- Running Test: Safe Counter (Actor) Concurrency Test ---
+Safe Counter: Expected 10000, Got 10000
+✅ PASSED: Safe Counter (Actor) Concurrency Test
+----------------------------------
+*/
 
 enum BankError: Error {
     case insufficientFunds
