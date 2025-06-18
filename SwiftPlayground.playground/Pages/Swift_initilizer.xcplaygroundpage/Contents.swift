@@ -5,6 +5,8 @@
   Let’s Imagine you're opening a new savings account at a bank. The bank needs some basic information: your name and the initial deposit. *This is like the standard init in Swift—it’s the default way to set up an object with all the necessary details.*
   */
 import Foundation
+import UIKit
+import PlaygroundSupport
 class BankAccountOne {
     var name: String
     var balance: Double
@@ -26,6 +28,9 @@ var axisAccount = BankAccountOne(name: "Axis Bank", balance: 10000)
  
   Now, imagine every branch of this bank must have a specific process for opening an account, but it can be slightly different in each branch. However, there’s one rule they all must follow: they need to check your ID. *The required init in Swift is similar. If a class has a required init, any subclass must implement it, ensuring certain initialization steps are always followed.*
   */
+/*:
+    1st
+ */
 class Account {
     var id: String
     
@@ -47,6 +52,36 @@ class SavingsAccount: Account {
     }
 }
 var savingsAccount = SavingsAccount(id: "12345", interestRate: 0.05)
+/*:
+    2nd
+ 
+ **Why setupView() in both?**
+
+ - Custom view can be initialized in two fundamentally different ways:
+
+ **Programmatically:** Using init(frame: CGRect). This happens when you create the view directly in code (e.g., let myView = MyCustomView(frame: .zero)).
+ **Interface Builder (Storyboard/NIB):** Using required init?(coder: NSCoder). This happens when you drag a UIView onto a Storyboard and change its class to your custom class, or load a NIB file. The system then deserializes the view.
+ */
+class CustomClass: UIView {
+    // 1. Designated Initializer for programmatic creation
+    init(title: String, frame: CGRect) {
+        super.init(frame: frame)
+        print("designated init")
+        self.backgroundColor = .red
+    }
+    init() {
+        print("designated custom init")
+        super.init(frame: CGRect.zero)
+    }
+    // 2. REQUIRED Initializer for Interface Builder / Deserialization
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        print("designated coder init")
+        self.backgroundColor = .red
+    }
+}
+PlaygroundPage.current.liveView = CustomClass(title: "my custom class", frame: CGRect(x: 50, y: 50, width: 200, height: 100))
+PlaygroundPage.current.needsIndefiniteExecution = true
 /*:
   **convenience init: The Shortcut Initializer**
   
