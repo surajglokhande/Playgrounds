@@ -4,59 +4,53 @@
  ## Stored Properties:
  - Stored properties are the simplest form of properties - they store values as part of an instance
   */
- //**Value Types (Structures):**
- struct FixedLengthStruct {
-     var firstValue: Int
-     let length: Int
- }
- var s1 = FixedLengthStruct(firstValue: 1, length: 2)
- let s2 = FixedLengthStruct(firstValue: 3, length: 4)
-
- s1.firstValue = 10
- s1.length = 20 //Cannot assign to property: 'length' is a 'let' constant
-
- s2.firstValue = 30 //Cannot assign to property: 's2' is a 'let' constant
- s2.length = 40 //Cannot assign to property: 'length' is a 'let' constant
-
- // Reference Types (Classes):
- class FixedLengthClass {
-     var firstValue: Int = 0
-     let length: Int = 0
- }
- var c1 = FixedLengthClass()
- let c2 = FixedLengthClass()
-
- c1.firstValue = 10
- c1.length = 20 //Cannot assign to property: 'length' is a 'let' constant
-
- c2.firstValue = 30
- c2.length = 40 //Cannot assign to property: 'length' is a 'let' constant
+var storeProp = {
+    var str = String()
+    str += "Hello, World!"
+    return str
+}()
 /*:
  ## Computed Properties:
 - Computed properties don't store a value directly but rather provide a getter and an optional setter to retrieve and set other properties indirectly
+- Computed properties calculate data on demand. so it introduce performance overhead.
+- **Lack of Stored State:** Computed properties cannot hold their own state. They rely on other stored properties or external factors to determine their value.
+- **No Direct inout Parameter Support:** You can't directly use a computed property as an inout parameter in a function. inout parameters require a memory location where the value can be directly modified, and computed properties don't have that direct memory association.
  */
- struct Point {
-     var x = 0.0, y = 0.0
- }
-
- struct Size {
-     var width = 0.0, height = 0.0
- }
-
- struct Rect {
-     var origin = Point()
-     var size = Size()
-     var center: Point {  // computed property
-         get {
-             Point(x: origin.x + (size.width / 2),
-                   y: origin.y + (size.height / 2))
-         }
-         set {
-             origin.x = newValue.x - (size.width / 2)
-             origin.y = newValue.y - (size.height / 2)
-         }
-     }
- }
+struct Point {
+    var x = 0.0, y = 0.0
+}
+struct Size {
+    var width = 0.0, height = 0.0
+}
+struct Rect {
+    var origin = Point()
+    var size = Size()
+    var center: Point {  // computed property
+        get {
+            return Point(x: origin.x + (size.width / 2),
+                  y: origin.y + (size.height / 2))
+        }
+        set {
+            origin.x = newValue.x - (size.width / 2)
+            origin.y = newValue.y - (size.height / 2)
+        }
+    }
+}
+//carsh
+func moveRect(_ center: inout Point) {
+    //print(rect.center.x)
+    center.x += 10
+    //print(rect.center.x)
+}
+var rect = Rect()
+rect.origin = Point(x: 10, y: 20)
+rect.size = Size(width: 100, height: 200)
+print(rect.center)
+//rect.center = Point(x: 300, y: 400)
+print(rect.center)
+//crash
+moveRect(&rect.origin)
+print(rect.center)
 /*:
  ## Property Observers
   - Property observers let you monitor and respond to changes in a property's value
