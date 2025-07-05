@@ -20,11 +20,38 @@ for character in puzzleInput {
 }
 print(puzzleOutput)
 
-
+// Print only even numbers
+outerloop: for i in 0..<10 {
+    innerloop: for i in 0..<10 {
+        if i % 2 != 0 { // If i is odd
+            continue outerloop // Skip the rest of the current iteration and go to the next
+        }
+        print("\(i) is an even number.")
+    }
+}
 /*:
 	break
  */
+// Stop searching for a number once found
+let numbers = [1, 5, 8, 12, 15]
+let target = 8
+for num in numbers {
+    if num == target {
+        print("\(target) found!")
+        break // Exit the loop immediately
+    }
+    print("Checking \(num)...")
+}
 
+// Breaking out of an outer loop using a labeled statement
+outerLoop: for row in 1...3 {
+    for column in 1...3 {
+        print("(\(row), \(column))")
+        if row == 2 && column == 2 {
+            break outerLoop // Breaks out of the 'outerLoop'
+        }
+    }
+}
 /*:
 	fallthrough
  */
@@ -49,6 +76,27 @@ print(description)
 /*:
 	throw
  */
+enum DataError: Error {
+    case emptyData(String)
+    case invalidData(String)
+    case falseData
+}
 
-
+func throwsError(str: String) throws -> Bool {
+    if str.isEmpty {
+        throw DataError.emptyData("empty")
+    }else if str.contains("suraj"){
+        throw DataError.invalidData("invalid")
+    }else {
+        return true
+    }
+}
+do {
+    var recived = try throwsError(str: "")
+    print("successs:\(recived)")
+}catch DataError.invalidData(let msg) {
+    print(msg)
+}catch DataError.emptyData(let msg) {
+    print(msg)
+}
 //: [Next](@next)

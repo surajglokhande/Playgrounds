@@ -1,6 +1,7 @@
 //: [Previous](@previous)
 import UIKit
 import Foundation
+import PlaygroundSupport
 // MARK: - 1. Coordinator Protocol (No Change)
 
 // Defines the basic behavior of any coordinator
@@ -144,13 +145,13 @@ class ScreenBViewController: UIViewController, Storyboarded {
 */
 
 // --- SceneDelegate.swift ---
-/*
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var mainCoordinator: MainCoordinator?
 
-    func scene(_ scene: UIScene, willConnectTo session: UISession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         window = UIWindow(windowScene: windowScene)
@@ -170,7 +171,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     // ... other SceneDelegate methods
 }
-*/
+
 
 // --- AppDelegate.swift (if not using SceneDelegate, e.g., older projects) ---
 /*

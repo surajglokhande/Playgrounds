@@ -124,7 +124,7 @@ class ScreenBViewController: UIViewController, Storyboarded {
 */
 
 // --- SceneDelegate.swift ---
-/*
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -152,7 +152,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     // ... other SceneDelegate methods
 }
-*/
+
 
 // --- AppDelegate.swift (if not using SceneDelegate, e.g., older projects) ---
 /*

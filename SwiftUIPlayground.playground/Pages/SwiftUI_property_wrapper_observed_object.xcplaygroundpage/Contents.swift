@@ -46,6 +46,22 @@ PlaygroundPage.current.setLiveView(
 /*:
  Example Two
  */
+final class CounterViewModel: ObservableObject {
+    @Published var count = 0
+    var name: String = ""
+    init(_name: String) {
+        self.name = _name
+        debugPrint("\(self) init \(name)")
+    }
+
+    func incrementCounter() {
+        count += 1
+    }
+
+    deinit {
+        debugPrint("\(self) de-init \(name)")
+    }
+}
 struct ObservedObjectCounterViewTwo: View {
 	@ObservedObject var viewModel: CounterViewModel
 

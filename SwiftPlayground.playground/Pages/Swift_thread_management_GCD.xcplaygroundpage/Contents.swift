@@ -13,7 +13,6 @@ import PlaygroundSupport
 /*:
  pause and resume not allowed in GCD
  */
-
 public struct Demo {
 
 	private var employee : [Employee]? = nil

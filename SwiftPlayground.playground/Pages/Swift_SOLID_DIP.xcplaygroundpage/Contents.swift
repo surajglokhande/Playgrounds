@@ -86,4 +86,81 @@ var demoOBJ1 = Demo(vehicleOne1obj: VehicleOne(), vehicleOne2obj: VehicleOne())
 var demoOBJ2 = demoOBJ1
 demoOBJ1.getInfoOne()
 demoOBJ2.getInfoTwo()
+
+/*:
+    Problem
+ */
+
+// Low-level module: Concrete EmailService
+class EmailService {
+    func sendEmail(to recipient: String, message: String) {
+        print("Sending email to \(recipient): \(message)")
+    }
+}
+
+// High-level module: OrderProcessor
+class OrderProcessor {
+    private let emailService = EmailService() // Direct dependency on a concrete implementation
+
+    func processOrder(orderId: String, customerEmail: String) {
+        print("Processing order \(orderId)...")
+        // ... some order processing logic ...
+
+        emailService.sendEmail(to: customerEmail, message: "Your order \(orderId) has been processed!")
+    }
+}
+
+// Usage
+let processor = OrderProcessor()
+processor.processOrder(orderId: "A123", customerEmail: "customer@example.com")
+
+/*:
+    Solution
+ */
+
+// 1. Abstraction (Protocol) - High-level and low-level modules depend on this
+protocol NotificationService {
+    func send(to recipient: String, message: String)
+}
+
+// 2. Low-level module: Concrete EmailService (depends on abstraction)
+class EmailServiceOne: NotificationService {
+    func send(to recipient: String, message: String) {
+        print("Sending email to \(recipient): \(message)")
+    }
+}
+
+// 3. Another Low-level module: Concrete SMSService (depends on abstraction)
+class SMSService: NotificationService {
+    func send(to recipient: String, message: String) {
+        print("Sending SMS to \(recipient): \(message)")
+    }
+}
+
+// 4. High-level module: OrderProcessor (depends on abstraction)
+class OrderProcessorOne {
+    private let notificationService: NotificationService // Depends on the abstraction (protocol)
+
+    // Dependency Injection: The concrete implementation is "injected" from outside
+    init(notificationService: NotificationService) {
+        self.notificationService = notificationService
+    }
+
+    func processOrder(orderId: String, customerContact: String) {
+        print("Processing order \(orderId)...")
+        // ... some order processing logic ...
+
+        notificationService.send(to: customerContact, message: "Your order \(orderId) has been processed!")
+    }
+}
+
+// Usage
+// We can now "inject" different notification services
+let emailProcessor = OrderProcessorOne(notificationService: EmailServiceOne())
+emailProcessor.processOrder(orderId: "B456", customerContact: "customer@example.com")
+
+print("---")
+
+let smsProcessor = OrderProcessorOne(notificationService: SMSService())
+smsProcessor.processOrder(orderId: "C789", customerContact: "+919876543210")
 //: [Next](@next)

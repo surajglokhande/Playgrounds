@@ -15,18 +15,21 @@
  ## Trailing Closures
  - **Trailing Closures:** A syntax for writing a closure expression outside of the function call's parentheses, making the code more readable, especially for long closures.
  */
-func someFunctionThatTakesAClosure(closure: () -> Void) {
+func someFunctionThatTakesAClosure(closure: (Int) -> Void) {
 		// function body goes here
+        closure(0)
 }
 
 // Here's how you call this function without using a trailing closure:
-someFunctionThatTakesAClosure(closure: {
+someFunctionThatTakesAClosure(closure: { status in
 	// closure's body goes here
+    print(status)
 })
 
 // Here's how you call this function with a trailing closure instead:
-someFunctionThatTakesAClosure() {
+someFunctionThatTakesAClosure() { status in
 		// trailing closure's body goes here
+    print(status)
 }
 
 /*: 
@@ -92,11 +95,25 @@ func someFunctionWithNonescapingClosure(closure: () -> Void) {
 
 class SomeClass {
 	var x = 10
+    var y = 10
 	func doSomething() {
-		someFunctionWithEscapingClosure { self.x = 100 } //or someFunctionWithEscapingClosure { [self] in x = 100 }
-		someFunctionWithNonescapingClosure { self.x = 200 }
+        print("initiat")
+		someFunctionWithEscapingClosure {
+            print("inside")
+            self.x = 100
+        } //or someFunctionWithEscapingClosure { [self] in x = 100 }
+		someFunctionWithNonescapingClosure {
+            print("inside non escaping")
+            self.y = 200
+        }
+        print("initiat closed")
 	}
 }
+var s = SomeClass()
+print("\(s.x):\(s.y)")
+s.doSomething()
+completionHandlers.first?()
+print("\(s.x):\(s.y)")
 /*:
  **Structures and Enumerations**
  - **Value Types:** Escaping closures cannot capture a mutable reference to self when self is a structure or enumeration.
@@ -128,11 +145,7 @@ var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 print(customersInLine.count)
 	// Prints "5"
 
-
 let customerProvider = { customersInLine.remove(at: 0) }
-print(customersInLine.count)
-	// Prints "5"
-
 
 print("Now serving \(customerProvider())!")
 	// Prints "Now serving Chris!"
@@ -146,6 +159,10 @@ func printIfTrue(_ condition: @autoclosure () -> Bool) {
 		print("True")
 	}
 }
+func addition(_ add: @autoclosure () -> Int) {
+    print(add())
+}
 
 printIfTrue(2 > 1) // Prints "True"
+addition(10 + 20)
 //: [Next](@next)
