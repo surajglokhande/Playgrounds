@@ -54,27 +54,167 @@ func arrayFunc() {
     print(uniqueArray) // Output: [5, 9, 7, 11]
 }
 //arrayFunc()
-
-/*:
- ## Second Largest Element in an Array
- */
-
-func SecoundLargest() -> Int {
-    var array = [12, 34, 1, 10, 34, 1]
-//    Output: 34
-//    Explanation: The largest element of the array is 35 and the second largest element is 34.
-    
-    var largest = array[0]
-//    var secoundLargest = -1
-    for item in array {
-        if item > largest {
-            largest = item
-        }
-//        else if item == largest {
-//            largest = -1
-//        }
-    }
-    return largest
+//higher order functions
+func sortFunction() {
+    var arr = [1, 2, 3]
+    print(arr.map { [$0, $0] })
+    print(arr.compactMap { [$0, $0] })
+    print(arr.flatMap { [$0, $0] })
 }
-print(SecoundLargest())
+//sortFunction()
+
+//removed dublicate element
+func removeDublicate() {
+    var array = [5, 9, 7, 11, 9, 11]
+    //don't use any predefined function like contains
+    //keep the order of the elements same
+    //removed dublicate element
+    //output:
+    // [5,9,7,11]
+
+    var uniqueArray: [Int] = []
+    var seenElements: [Int: Bool] = [:]  // Using a dictionary/hash map for efficient lookup
+
+    for element in array {
+        // Check if the element has already been seen
+        if seenElements[element] == nil {  // If it's nil, the element hasn't been added yet
+            uniqueArray.append(element)
+            seenElements[element] = true  // Mark the element as seen
+        }
+    }
+
+    print(uniqueArray)  // Output: [5, 9, 7, 11]
+}
+//removeDublicate()
+
+//Second Largest Element in an Array
+func secoundLargest() {
+    var array = [100, 35, 10, 10, 34, 1, 79]
+    //    Output: 34
+    //    Explanation: The largest element of the array is 35 and the second largest element is 34.
+
+    var largestNumber = 0
+    var secoundLargestNumber = 0
+    for item in array {
+        if item > largestNumber {
+            secoundLargestNumber = largestNumber
+            largestNumber = item
+        } else if item > secoundLargestNumber && item < largestNumber {
+            secoundLargestNumber = item
+        }
+        //        if item != largestNumber{
+        //            if item > secoundLargestNumber {
+        //                secoundLargestNumber = item
+        //            }
+        //        }
+    }
+    print(largestNumber)
+    print(secoundLargestNumber)
+}
+//secoundLargest()
+
+//3rd largest element in array
+func thirdLargest() {
+    var array = [36, 1, 10, 34, 10, 79, 100]
+    //    Output: 34
+    //    Explanation: The largest element of the array is 35 and the second largest element is 34.
+
+    var largestNumber = 0
+    var secoundLargestNumber = 0
+    var thirdLargestNumber = 0
+    for item in array {
+        if item > largestNumber {
+            thirdLargestNumber = secoundLargestNumber
+            secoundLargestNumber = largestNumber
+            largestNumber = item
+        } else if item > thirdLargestNumber && item < largestNumber {
+            if item > secoundLargestNumber {
+                thirdLargestNumber = secoundLargestNumber
+                secoundLargestNumber = item
+            }
+        }
+    }
+    print(largestNumber)
+    print(secoundLargestNumber)
+    print(thirdLargestNumber)
+    //Multiplication of 10, 6 and 20
+    print(largestNumber * secoundLargestNumber * thirdLargestNumber)
+}
+//thirdLargest()
+
+//Maximum consecutive one’s (or zeros) in a binary array
+func consecutiveOnes() {
+    var array = [0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0]
+    //    Output: 4
+    //    Explanation: The maximum number of consecutive 1’s in the array is 4 from index 3-6.
+    //    var outputArray: [Int: Int] = [:]
+    var maxCount = 0
+    var currentCount = 0
+    for i in 1..<array.count {
+        if array[i] == array[i - 1] {
+            currentCount += 1
+            maxCount = maxCount > currentCount ? maxCount : currentCount
+        } else {
+            currentCount = 1
+        }
+    }
+    print(maxCount)
+}
+//consecutiveOnes()
+
+//Move all zeros to end of array
+func moveZeroToEnd() {
+    var array = [1, 2, 0, 4, 3, 0, 5, 0]
+    //    Output: arr[] = [1, 2, 4, 3, 5, 0, 0, 0]
+    //    Explanation: There are three 0s that are moved to the end.
+    var outputArray: [Int] = []
+    var zeroArray: [Int] = []
+    for i in 0..<array.count {
+        if array[i] != 0 {
+            outputArray.append(array[i])
+        }else{
+            zeroArray.append(array[i])
+        }
+    }
+    outputArray.append(contentsOf: zeroArray)
+    print(outputArray)
+}
+//moveZeroToEnd()
+
+//Reverse an Array in groups of given size
+func reversedArrayInGroup() {
+    var array = [1, 2, 3, 4, 5, 6, 7, 8] //k = 3
+    //    Output: [3, 2, 1, 6, 5, 4, 8, 7]
+    //    Explanation: Elements is reversed: [1, 2, 3] → [3, 2, 1], [4, 5, 6] → [6, 5, 4], and the last group [7, 8](size < 3) is reversed as [8, 7].
+    
+//    var outputArray: [Int] = []
+    var i = 0
+    while i < array.count {
+//        print(array[i])
+        var temp = 0
+        for i in 0..<3 {
+            var temp = array[i]
+            array[i] = array[3]
+            array[3] = temp
+        }
+        i += 3
+    }
+
+}
+//reversedArrayInGroup()
+
+//Rotate an Array by d - Counterclockwise or Left
+func rotateArray() {
+    var array = [1, 2, 3, 4, 5, 6]
+//    Output: [3, 4, 5, 6, 1, 2]
+//    Explanation: After first left rotation, arr[] becomes [2, 3, 4, 5, 6, 1] and after the second   rotation, arr[] becomes [3, 4, 5, 6, 1, 2]
+    
+    var k = 2
+    var outputArray: [Int] = []
+    for i in k..<array.count {
+        outputArray.append(i)
+    }
+    outputArray.append(array)
+}
+rotateArray()
 //: [Next](@next)
