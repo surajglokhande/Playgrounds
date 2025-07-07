@@ -88,7 +88,7 @@ demoOBJ1.getInfoOne()
 demoOBJ2.getInfoTwo()
 
 /*:
-    Problem
+    Problem One
  */
 
 // Low-level module: Concrete EmailService
@@ -115,7 +115,7 @@ let processor = OrderProcessor()
 processor.processOrder(orderId: "A123", customerEmail: "customer@example.com")
 
 /*:
-    Solution
+    Solution One
  */
 
 // 1. Abstraction (Protocol) - High-level and low-level modules depend on this
@@ -163,4 +163,45 @@ print("---")
 
 let smsProcessor = OrderProcessorOne(notificationService: SMSService())
 smsProcessor.processOrder(orderId: "C789", customerContact: "+919876543210")
+/*:
+    Problem Two
+ */
+// Not following DIP
+class Service {
+    // Service has a dependency on the concrete implementation
+    private let database: Database = Database()
+    func fetchData() {
+        // Use the database to fetch data
+    }
+}
+class Database {
+    //
+}
+/*:
+    Solution Two
+ */
+protocol DataService {
+    func fetchData(completion: @escaping ([String]) -> Void)
+}
+class ViewModel {
+    let dataService: DataService
+    init(dataService: DataService) {
+        self.dataService = dataService
+    }
+    func fetchData() {
+        dataService.fetchData { data in
+            // Process data
+        }
+    }
+}
+class RemoteDataService: DataService {
+    func fetchData(completion: @escaping ([String]) -> Void) {
+        // Fetch data from a remote server
+    }
+}
+class LocalDataService: DataService {
+    func fetchData(completion: @escaping ([String]) -> Void) {
+        // Fetch data from a local database
+    }
+}
 //: [Next](@next)
