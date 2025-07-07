@@ -66,8 +66,8 @@ var d1 = Demo2()
  - **Copy on Modification(CoM):** When one of the instances is modified, Swift creates a copy of the collection to ensure that the modification does not affect the other instance.
  */
 struct Counter {
-    var count = 0
-    static var count2 = 0
+    var count = 5
+    static var count2 = 5
     
     // Must use 'mutating' to modify properties
     mutating func increment() {
@@ -76,24 +76,25 @@ struct Counter {
     func increment2() {
         Counter.count2 += 1
     }
+    
 }
 var counter = Counter()
 //counter.count = counter.count + 1
+print("before increment call: static:\(Counter.count2): mutating:\(counter.count)")
 counter.increment()
 counter.increment2()
-print("\(Counter.count2): \(counter.count)")
+print("after increment call: static:\(Counter.count2): mutating:\(counter.count)")
 var counter2 = counter
-counter2.count = 5
-Counter.count2 = 5
-counter.increment()
-counter2.increment2()
-print("\(Counter.count2): \(counter2.count): \(counter.count)")
-//var counter = Counter()
-//counter.increment()
-//print(counter.count)
-//var counter2 = counter
-//counter2.increment()
-//print(counter2.count)
+print("before assign 10: static:\(Counter.count2): mutating:\(counter2.count)")
+counter.count = 8
+counter2.count = 10
+Counter.count2 = 10
+print("after assign 10: static:\(Counter.count2): mutating:\(counter2.count)")
+counter.increment() // 6+1 = 7
+counter2.increment() // 10+1
+counter.increment2() //10+1
+counter2.increment2() //10+1
+print("after increament call: static:\(Counter.count2): mutating:\(counter2.count): \(counter.count)")
 /*:
  Behaviour of struct type inside class type
  */
