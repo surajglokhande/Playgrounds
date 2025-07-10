@@ -19,6 +19,12 @@
  */
 import XCTest
 import Foundation
+
+enum MyCustomError: Error {
+    case invalidInput
+    case resourceNotFound(filename: String) // Associated value for more info
+    case operationFailed(code: Int, message: String)
+}
 class MyAsyncTests: XCTestCase {
 
     func testNetworkRequestSuccess() {
@@ -50,17 +56,18 @@ class MyAsyncTests: XCTestCase {
 
     // ... more tests
 }
-
 // Example of a simple asynchronous service
 class MyNetworkService {
     func fetchData(completion: @escaping (Result<Data, Error>) -> Void) {
         // Simulate a network request with a delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            let sampleData = "Hello, async world!".data(using: .utf8)
-            completion(.success(sampleData!))
+            let sampleData = String().data(using: .utf8)
+            completion(.failure(MyCustomError.invalidInput))
         }
     }
 }
+//var obj = MyAsyncTests()
+//obj.testNetworkRequestSuccess()
 /*:
     b. Handling Multiple Expectations:
     If your test involves multiple asynchronous operations that need to complete, you can create multiple expectations and wait for all of them:
@@ -99,6 +106,7 @@ func testMultipleCallbacks() {
 
     let _ = XCTWaiter().wait(for: [expectation], timeout: 5.0)
 }
+testMultipleCallbacks()
 /*:
     d. isInverted Expectation:
     You can set isInverted = true on an XCTestExpectation if you expect a certain event not to happen. If the inverted expectation is fulfilled, the test will fail.
