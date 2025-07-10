@@ -381,7 +381,17 @@ its a concurrent queue, thats why? if you used consurrent queue with sync-async 
          end concurrent queue.sync 2
 		 */
 	}
-
+/*:
+ **Type:** DispatchWorkItem is a class in Swift.
+ 
+ **Purpose:** It encapsulates a block of code (closure) that you want to perform on a queue, allowing you to control its execution more precisely than just submitting a closure directly.
+ 
+ **Features:**
+ - You can cancel a work item before it executes (if not started).
+ - You can notify another block to execute when the work item finishes.
+ - You can wait for the work item to complete.
+ - You can reuse the work item by submitting it to multiple queues.
+ */
 	func dispatch_work_item() {
         // Create the first work item
         let firstWorkItem = DispatchWorkItem {
@@ -546,7 +556,7 @@ its a concurrent queue, thats why? if you used consurrent queue with sync-async 
 
 - **Counting Semaphore:** It maintains a count that represents the number of available resources.
 - **Blocking and Signaling:** Threads can wait (block) until a resource becomes available or signal (release) a resource when done.
-- **Efficient Implementation:** It only calls down to the kernel when the calling thread needs to be blocked, making it efficient1.
+- **Efficient Implementation:** It only calls down to the kernel when the calling thread needs to be blocked, making it efficient.
 
 ### Explanation
 
@@ -558,7 +568,7 @@ its a concurrent queue, thats why? if you used consurrent queue with sync-async 
 
 - **Resource Management:** Controls access to limited resources, preventing resource contention.
 - **Synchronization:** Ensures that tasks are executed in a controlled manner, avoiding race conditions.
-- **Efficiency:** Provides an efficient way to manage concurrency without excessive kernel calls1.
+- **Efficiency:** Provides an efficient way to manage concurrency without excessive kernel calls.
 */
 	public func dispatch_semaphore() {
 		let queue = DispatchQueue(label: "semaphoreDemo", qos: .utility, attributes: .concurrent)

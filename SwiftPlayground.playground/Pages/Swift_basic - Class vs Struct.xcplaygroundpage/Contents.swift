@@ -86,10 +86,10 @@ counter.increment2()
 print("after increment call: static:\(Counter.count2): mutating:\(counter.count)")
 var counter2 = counter
 print("before assign 10: static:\(Counter.count2): mutating:\(counter2.count)")
-counter.count = 8
+//counter.count = 8
 counter2.count = 10
 Counter.count2 = 10
-print("after assign 10: static:\(Counter.count2): mutating:\(counter2.count)")
+print("after assign 10: static:\(Counter.count2): mutating:\(counter2.count): \(counter.count)")
 counter.increment() // 6+1 = 7
 counter2.increment() // 10+1
 counter.increment2() //10+1
