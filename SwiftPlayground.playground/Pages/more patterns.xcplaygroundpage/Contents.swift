@@ -231,15 +231,39 @@ func reversedArrayInGroup() {
 //Rotate an Array by d - Counterclockwise or Left
 func rotateArray() {
     var array = [1, 2, 3, 4, 5, 6]
-//    Output: [3, 4, 5, 6, 1, 2]
+//    Output: [3, 4, 5, 6, 1, 2] k = 2
 //    Explanation: After first left rotation, arr[] becomes [2, 3, 4, 5, 6, 1] and after the second   rotation, arr[] becomes [3, 4, 5, 6, 1, 2]
-    
     var k = 2
-    var outputArray: [Int] = []
-    for i in k..<array.count {
-        outputArray.append(i)
+    k %= array.count
+    var middle = k - 1
+    var last = array.count - 1
+    
+    reverse(array: &array, start: 0, end: middle)
+    reverse(array: &array, start: k, end: last)
+    reverse(array: &array, start: 0, end: last)
+
+    print(array)
+}
+func reverse(array:inout [Int], start: Int, end: Int) {
+    var start = start
+    var end = end
+    while start < end {
+        var temp = array[start]
+        array[start] = array[end]
+        array[end] = temp
+        start += 1
+        end -= 1
     }
-    outputArray.append(array)
 }
 rotateArray()
+
+//Sort an array in wave form
+
+func waveArray() {
+    var arr: [Int] = [1, 2, 3, 4, 5]
+    //Output: [2, 1, 4, 3, 5]
+    //Explanation: Array elements after sorting it in the waveform are 2, 1, 4, 3, 5.
+    
+    
+}
 //: [Next](@next)
