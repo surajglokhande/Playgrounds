@@ -107,6 +107,17 @@ actor BankAccount {
         return balance
     }
 }
+enum BankError: Error {
+    case insufficientFunds
+}
+let myAccount = BankAccount(accountNumber: 12345, initialDeposit: 100.0)
+
+//reentrant
+//print(myAccount.accountNumber) // No await needed for immutable 'let' properties
+//Output:
+//Current balance: 150.0
+//Not enough funds!
+//12345
 /*:
  Another Example of Actor
  */
@@ -140,7 +151,7 @@ class UnsafeCounterOne {
         // In real-world, this happens without explicit delays.
         // Thread.sleep(forTimeInterval: 0.000001)
         count = currentCount + 1
-        print("count: \(count)")
+        //print("UnsafeCounterOne count: \(count)")
     }
 }
 
@@ -153,6 +164,7 @@ actor SafeCounterOne {
     /// and ensures that only one task can modify `count` at a time.
     func increment() {
         count += 1
+        //print("SafeCounterOne count: \(count)")
     }
 
     /// A synchronous method to get the current count.
@@ -235,10 +247,10 @@ func testSafeCounterConcurrency() async -> Bool {
 
 // The top-level code in a Swift Playground implicitly runs in an asynchronous context
 // if it contains `await` calls.
-Task {
-    await runTest(named: "Unsafe Counter Race Condition Test", testUnsafeCounterConcurrency)
-    await runTest(named: "Safe Counter (Actor) Concurrency Test", testSafeCounterConcurrency)
-}
+//Task {
+//    await runTest(named: "Unsafe Counter Race Condition Test", testUnsafeCounterConcurrency)
+//    await runTest(named: "Safe Counter (Actor) Concurrency Test", testSafeCounterConcurrency)
+//}
 
 /*
 Expected Output in the Playground Console (the 'Unsafe' test might vary slightly but will likely fail):
@@ -253,18 +265,6 @@ Safe Counter: Expected 10000, Got 10000
 ✅ PASSED: Safe Counter (Actor) Concurrency Test
 ----------------------------------
 */
-
-enum BankError: Error {
-    case insufficientFunds
-}
-let myAccount = BankAccount(accountNumber: 12345, initialDeposit: 100.0)
-
-//reentrant
-//print(myAccount.accountNumber) // No await needed for immutable 'let' properties
-//Output:
-//Current balance: 150.0
-//Not enough funds!
-//12345
 /*:
  Example to reentrant
  */
@@ -375,9 +375,9 @@ struct ReentrancyExample {
         print("--- All tasks complete or timed out ---")
     }
 }
-//Task {
-//    await ReentrancyExample.main()
-//}
+Task {
+    await ReentrancyExample.main()
+}
 //Output:
 //--- Starting Downloads ---
 // Task 1: Requesting download for file1.txt
@@ -488,6 +488,7 @@ struct ReentrancyDemo {
 //Task {
 //    await ReentrancyDemo.main()
 //}
+
 /*:
  **Key Benefits of Actors:**
  

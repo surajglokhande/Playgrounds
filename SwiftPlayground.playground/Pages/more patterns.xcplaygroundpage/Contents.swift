@@ -34,7 +34,7 @@ var arrayPer = [Man(name: "suraj", address: [arrayAdd[0],arrayAdd[1]]),
 
 var newArray = arrayPer.filter({ $0.address?.filter({ $0.addressLine != nil && $0.addressType == "permanent" }).count ?? 0 > 0 }).map({ $0.name })
 
-print(newArray)
+//print(newArray)
 
 func giveOutput() {
     var array = [1, 2, 3]
@@ -255,7 +255,7 @@ func reverse(array:inout [Int], start: Int, end: Int) {
         end -= 1
     }
 }
-rotateArray()
+//rotateArray()
 
 //Sort an array in wave form
 
@@ -264,6 +264,89 @@ func waveArray() {
     //Output: [2, 1, 4, 3, 5]
     //Explanation: Array elements after sorting it in the waveform are 2, 1, 4, 3, 5.
     
-    
+    for i in stride(from: 0, to: arr.count - 1, by: 2) {
+        var temp = arr[i]
+        arr[i] = arr[i+1]
+        arr[i+1] = temp
+    }
+    print(arr)
 }
+//waveArray()
+
+//Adding one to number represented as array of digits
+func PlusOne() {
+    var array: [Int] = [1, 2, 4]
+//    Output : 125
+//    Explanation: 124 + 1 = 125
+    
+    var total = ""
+    for i in 0..<array.count {
+        total += "\(array[i])"
+    }
+    print((Int(total) ?? 0)+1)
+}
+//PlusOne()
+
+//Remove All Occurrences of an Element in an Array
+func RemovedAllOccu() {
+    var array: [Int] = [0, 1, 3, 0, 2, 2, 4, 2]
+//    ele = 2
+//    Output: 5
+    
+    var k = 2
+    var count = 0
+    for i in 0..<array.count {
+        if array[i] != k {
+            count += 1
+        }
+     }
+    print(count)
+}
+
+//RemovedAllOccu()
+
+//Finding sum of digits of a number until sum becomes single digit
+func sumOfDigit() {
+    var array = 5674
+//    Output: 1
+//    Explanation:
+//    Step 1: 1 + 2 + 3 + 4 = 10
+//    Step 2: 1 + 0 = 1
+    
+    print(singleReturn(total: array))
+}
+func singleReturn(total: Int) -> Int {
+    var n = total
+    var count = 0
+    while (n > 0 || count > 9) {
+        if n == 0 {
+            n = count
+            count = 0
+        }
+        count += n % 10
+        n = Int(n/10)
+    }
+    return count
+}
+//sumOfDigit()
+
+//Remove duplicates from Sorted Array
+func removedDublicate() {
+    var arr: [Int] = [1, 2, 2, 3, 4, 4, 4, 5, 5]
+//    Output: [1, 2, 3, 4, 5]
+    
+    var newArray: [Int: Int] = [:]
+    var outputArray: [Int] = []
+    var count = 0
+    for i in 0..<arr.count {
+        if newArray[arr[i]] == nil {
+            newArray[arr[i]] = 1
+            outputArray.append(arr[i])
+        }else{
+            newArray[arr[i]]! += 1
+        }
+    }
+    print(count)
+}
+removedDublicate()
 //: [Next](@next)

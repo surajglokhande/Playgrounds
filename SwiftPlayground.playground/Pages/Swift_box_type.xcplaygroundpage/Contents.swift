@@ -1,12 +1,10 @@
 //: [Previous](@previous)
 /*:
- ## Box Class
  
- - used to wrap a value type (like a struct or enum) within a reference type (a class). This is useful in situations where you need reference semantics for a value.
- 
- - "Box Class Type" in Context is the underlying mechanism of existential containers: The way Swift internally wraps value types when they are used as any Protocol types, effectively giving them reference-like behavior.
- 
- - In modern Swift, with the introduction of any (for existential types) and some (for opaque types), the need to manually create "box classes" has decreased
+ ## Box Class
+ - used to wrap a value type (like a struct or enum) within a reference type (a class). This is useful in situations where you need reference semantics for a value.
+ - "Box Class Type" in Context is the underlying mechanism of existential containers: The way Swift internally wraps value types when they are used as any Protocol types, effectively giving them reference-like behavior.
+ - In modern Swift, with the introduction of any (for existential types) and some (for opaque types), the need to manually create "boxM classes" has decreased
  
  **What is "Boxing" in Swift?**
  

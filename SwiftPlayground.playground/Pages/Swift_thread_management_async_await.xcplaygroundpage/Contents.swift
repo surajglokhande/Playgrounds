@@ -91,9 +91,11 @@ struct MyApp {
         do {
             // 'await' waits for the async function to complete.
             // The task is suspended here, but the thread can do other work.
+            print("main start result 1")
             let result1 = try await fetchData(from: url1)
             print("Received: \(result1)")
-
+            
+            print("main start result 2")
             let result2 = try await fetchData(from: url2)
             print("Received: \(result2)")
 
