@@ -551,6 +551,9 @@ its a concurrent queue, thats why? if you used consurrent queue with sync-async 
     }
 /*:
 > A **DispatchSemaphore** in iOS is a synchronization tool that helps control access to a resource across multiple execution contexts. It uses a traditional counting semaphore mechanism to manage concurrent access, ensuring that only a specified number of threads can access a resource at the same time.
+ 
+### Problem Solved by DispatchSemaphore
+- **Race Conditions:** Multiple threads might try to modify the same data at the same time, leading to unpredictable and incorrect results.
 
 ### Key Features of DispatchSemaphore
 

@@ -60,6 +60,7 @@ var savingsAccount = SavingsAccount(id: "12345", interestRate: 0.05)
  - Custom view can be initialized in two fundamentally different ways:
 
  **Programmatically:** Using init(frame: CGRect). This happens when you create the view directly in code (e.g., let myView = MyCustomView(frame: .zero)).
+ 
  **Interface Builder (Storyboard/NIB):** Using required init?(coder: NSCoder). This happens when you drag a UIView onto a Storyboard and change its class to your custom class, or load a NIB file. The system then deserializes the view.
  */
 class CustomClass: UIView {

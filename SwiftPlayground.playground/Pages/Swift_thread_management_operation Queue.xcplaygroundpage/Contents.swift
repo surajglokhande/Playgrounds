@@ -1,13 +1,10 @@
 //: [Previous](@previous)
 //: # Operation Queue
-
 import Foundation
 import PlaygroundSupport
-
 /*:
 pause and resume not allowed in GCD
  */
-
 final class CustomOperation: Operation {
 
 	let itemProvider: NSItemProvider?

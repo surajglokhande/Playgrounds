@@ -96,6 +96,7 @@ class FilePersistence: InvoicePersistence_s {
 
 	public func save(filename: String) {
 			// Creates a file with given name and writes the invoice
+        print("FilePersistence")
 	}
 }
 class DatabasePersistence: InvoicePersistence_s {
@@ -107,8 +108,24 @@ class DatabasePersistence: InvoicePersistence_s {
 
 	public func save(filename: String) {
 			// save invoice in Database
+        print("DatabasePersistence")
 	}
 }
+class PersistanceTest {
+    var obj: InvoicePersistence_s?
+    
+    init(persistenceObj: InvoicePersistence_s) {
+        self.obj = persistenceObj
+    }
+    
+    func execute(file: String) {
+        obj?.save(filename: file)
+    }
+}
+var file = FilePersistence(invoice: Invoice())
+var database = DatabasePersistence(invoice: Invoice())
+var finalObj = PersistanceTest(persistenceObj: database)
+finalObj.execute(file: "fileDatabase")
 /*:
  respectiong Open-Closed Principle Problem One
  */

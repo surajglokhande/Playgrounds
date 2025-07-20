@@ -37,12 +37,17 @@ var newArray = arrayPer.filter({ $0.address?.filter({ $0.addressLine != nil && $
 //print(newArray)
 
 func giveOutput() {
-    var array = [1, 2, 3]
-    print(array.map { [$0, $0] })//  = [1,1])
+    var array = [1, 2, 3, nil, 4, 5]
+    print(array.map { $0 })//  = [1,1])
     print(array.compactMap{ [$0, $0] })// = [1,1])
-    print(array.flatMap{ [$0, $0] })// = [1,1])
+    print(array.compactMap{ $0 })// = [1,1])
+    print(array.flatMap{ $0 })// = [1,1])
+    print(array.flatMap{ [$0,$0] })// = [1,1])
+    print(array.reduce(1, { partialResult, count in
+        return partialResult * (count ?? 1)
+    }))
 }
-//giveOutput()
+giveOutput()
 func arrayFunc() {
     var array = [5,9,7,11,9,11]
     //don't use any predefined function like contains

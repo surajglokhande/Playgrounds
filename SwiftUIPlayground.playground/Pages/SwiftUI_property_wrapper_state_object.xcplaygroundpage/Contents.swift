@@ -24,7 +24,14 @@ struct StateObjectContentView: View {
 		} label: {
 			Text("Click me!")
 		}
+        SecoundView(newObj: user)
 	}
+}
+struct SecoundView: View {
+    @ObservedObject var newObj: User
+    var body: some View {
+        Text("\(newObj.username)")
+    }
 }
 PlaygroundPage.current.setLiveView(
 	StateObjectContentView()
