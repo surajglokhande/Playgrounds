@@ -93,7 +93,7 @@ print("after assign 10: static:\(Counter.count2): mutating:\(counter2.count): \(
 counter.increment() // 6+1 = 7
 counter2.increment() // 10+1
 counter.increment2() //10+1
-counter2.increment2() //10+1
+counter2.increment2() //11+1
 print("after increament call: static:\(Counter.count2): mutating:\(counter2.count): \(counter.count)")
 /*:
  Behaviour of struct type inside class type
