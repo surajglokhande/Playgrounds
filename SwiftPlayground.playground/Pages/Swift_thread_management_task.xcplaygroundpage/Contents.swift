@@ -49,10 +49,10 @@ func startBackgroundWork() {
     // backgroundTask.cancel() // Uncomment to see cancellation in action
 
     // Await the task's result if you need it later in an async context
-    // Task {
-    //     let finalResult = await backgroundTask.value
-    //     print("Final result awaited: \(finalResult)")
-    // }
+     Task {
+         let finalResult = await backgroundTask.result
+         print("Final result awaited: \(finalResult)")
+     }
 }
 
 // Call the function to demonstrate

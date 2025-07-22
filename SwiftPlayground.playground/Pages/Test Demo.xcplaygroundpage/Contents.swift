@@ -82,7 +82,6 @@
 //
 ////: [Next](@next)
 
-import Foundation
 
 
 //struct Demo1 {
@@ -194,41 +193,41 @@ import Foundation
 //
 //demo()
 
-protocol Root {
-    func method()
-}
+import Foundation
 
-extension Root {
-    func method() {
-        print("Method from Root")
+let backgroundQueue1 = DispatchQueue(label: "com.example.backgroundQueue1", attributes: .concurrent)
+let serialQueueForInnerWork = DispatchQueue(label: "com.example.serialInnerWork")
+
+func runNestedSyncToDifferentQueue() {
+    print("[\(Date())] Main Thread: Starting overall process.")
+
+    // Outer Block: Submitted to backgroundQueue1 asynchronously
+    backgroundQueue1.async {
+        print("[\(Date())] 🔴 Task on backgroundQueue1: Started.")
+        Thread.sleep(forTimeInterval: 0.5) // Simulate some work
+
+        print("[\(Date())] 🔴 Task on backgroundQueue1: Submitting inner Task 🔵 synchronously to serialQueueForInnerWork.")
+
+        // Inner Block: Submitted to serialQueueForInnerWork SYNCHRONOUSLY
+        serialQueueForInnerWork.sync {
+            print("[\(Date())] 🔵 Task on serialQueueForInnerWork: Started.")
+            Thread.sleep(forTimeInterval: 1.0) // Simulate more work
+            print("[\(Date())] 🔵 Task on serialQueueForInnerWork: Ended.")
+        }
+
+        print("[\(Date())] 🔴 Task on backgroundQueue1: Inner task completed. Continuing its own work.")
+        Thread.sleep(forTimeInterval: 0.5) // More work on backgroundQueue1
+        print("[\(Date())] 🔴 Task on backgroundQueue1: Ended.")
     }
+
+    print("[\(Date())] Main Thread: Outer task submitted. Main thread is free.")
+
+    // Keep the program alive to see all output
+    Thread.sleep(forTimeInterval: 3.0)
+    print("[\(Date())] Main Thread: Overall process finished.")
 }
 
-protocol ChildA: Root {}
-
-extension ChildA {
-    func method() {
-        print("Method from ChildA")
-    }
-}
-
-protocol ChildB: Root {}
-
-extension ChildB {
-    func method() {
-        print("Method from ChildB")
-    }
-}
-
-class MyClass: ChildA, ChildB {
-    func method() {
-        print("Method from Cmy class")
-    }
-}
-
-var obj = MyClass()
-obj.method()
-
+runNestedSyncToDifferentQueue()
 
 
 

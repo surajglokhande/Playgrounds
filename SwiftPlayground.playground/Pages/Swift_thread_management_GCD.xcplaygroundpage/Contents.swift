@@ -7,51 +7,62 @@
 - Async + Serial: Tasks run one after another, but the current thread is not blocked.
 - Sync + Concurrent: Tasks run one after another, blocking the current thread.
 - Async + Concurrent: Tasks run in parallel, and the current thread is not blocked.
-*/
-import Foundation
-import PlaygroundSupport
-/*:
+ 
+- **sync** → "Run this now and wait."
+ - **async** → "Schedule this for later, don’t wait."
+
+ 
  pause and resume not allowed in GCD
  */
+import Foundation
+import PlaygroundSupport
 public struct Demo {
 
 	private var employee : [Employee]? = nil
 
     //- Async + Serial: Tasks run one after another, but the current thread is not blocked.
 	func callMainThread() {
-
+        print("started")
 		DispatchQueue.main.async {
-			print("print 1")
+            for _ in 0...5 {
+                print("🔴")
+            }
 			DispatchQueue.main.async {
-				print("print 2")
+                for _ in 0...5 {
+                    print("⚪️")
+                }
+                for _ in 0...5 {
+                    print("🟡")
+                }
 			}
-			print("print 4")
-            print("print 5")
-            print("print 6")
+            for _ in 0...5 {
+                print("🟢")
+            }
 		}
-
+        print("ended")
 	}
 
     //- Async + Concurrent: Tasks run in parallel, and the current thread is not blocked.
 	func callBackgroundThread() {
-
+        print("started")
 		DispatchQueue.global().async {
-			for _ in 16...20 {
+			for _ in 0...5 {
 				print("🔴")
 			}
 			DispatchQueue.global().async {
-				for _ in 0...10 {
+				for _ in 0...5 {
 					print("⚪️")
 				}
 
-				for _ in 6...10 {
+				for _ in 0...5 {
 					print("🟡")
 				}
 			}
-			for _ in 11...15 {
+			for _ in 0...5 {
 				print("🟢")
 			}
 		}
+        print("ended")
 	}
 
 /*:
@@ -101,6 +112,25 @@ its a serial queue, thats why? if you used serial queue with sync-async and asyn
          end serial queue.sync 2
 		 */
 	}
+    
+    //crash // not crash on two serial queue
+    func serial_sync_nested() {
+        let queue = DispatchQueue(label: "serial_sync")
+        
+        print("start serial queue.sync 1")
+        queue.sync {
+            print("start serial queue.sync 2")
+            queue.sync {
+                print("⚪️ started")
+                for _ in 1...3 {
+                    print("⚪️")
+                }
+                print("⚪️ ended")
+            }
+            print("end serial queue.sync 2")
+        }
+        print("end serial queue.sync 1")
+    }
 
     //- Async + Serial: Tasks run one after another, but the current thread is not blocked.
 	func serial_async() {
@@ -146,6 +176,29 @@ its a serial queue, thats why? if you used serial queue with sync-async and asyn
          ⚪️ ended
 		 */
 	}
+    
+    func serial_async_nested() {
+        let queue = DispatchQueue(label: "serial_async")
+        
+        print("start serial queue.async 1")
+        
+        queue.async {
+            print("start serial queue.async 2")
+
+            queue.async {
+                print("⚪️ started")
+                for _ in 1...3 {
+                    print("⚪️")
+                }
+                print("⚪️ ended")
+            }
+            
+            print("end serial queue.async 2")
+            
+        }
+        
+        print("end serial queue.async 1")
+    }
 
 	func serial_sync_async() {
 		let queue = DispatchQueue(label: "serial_sync_async")
@@ -186,6 +239,24 @@ its a serial queue, thats why? if you used serial queue with sync-async and asyn
          ⚪️ ended
 		 */
 	}
+    
+    func serial_sync_async_nested() {
+        let queue = DispatchQueue(label: "serial_sync_async")
+
+        print("start serial queue.sync 1")
+        queue.sync {
+            print("start serial queue.async 2")
+            queue.async {
+                print("⚪️ started")
+                for _ in 1...3 {
+                    print("⚪️")
+                }
+                print("⚪️ ended")
+            }
+            print("end serial queue.async 2")
+        }
+        print("end serial queue.sync 1")
+    }
 
 	func serial_async_sync() {
 		let queue = DispatchQueue(label: "serial_async_sync")
@@ -225,6 +296,24 @@ its a serial queue, thats why? if you used serial queue with sync-async and asyn
          end serial queue.sync 2
 		 */
 	}
+    
+    //crash
+    func serial_async_sync_nested() {
+        let queue = DispatchQueue(label: "serial_async_sync")
+        print("start serial queue.async 1")
+        queue.async {
+            print("start serial queue.sync 2")
+            queue.sync {
+                print("⚪️ started")
+                for _ in 1...5 {
+                    print("⚪️")
+                }
+                print("⚪️ ended")
+            }
+            print("end serial queue.sync 2")
+        }
+        print("end serial queue.async 1")
+    }
 /*:
 its a concurrent queue, thats why? if you used consurrent queue with sync-async and async-sync result will be same
 */
@@ -267,6 +356,23 @@ its a concurrent queue, thats why? if you used consurrent queue with sync-async 
 		 */
 	}
     
+    func concurrent_sync_nested() {
+        let queue = DispatchQueue(label: "concurrent_sync", attributes: .concurrent)
+        print("start concurrent queue.sync 1")
+        queue.sync {
+            print("start concurrent queue.sync 2")
+            queue.sync {
+                print("⚪️ started")
+                for _ in 1...3 {
+                    print("⚪️")
+                }
+                print("⚪️ ended")
+            }
+            print("end concurrent queue.sync 2")
+        }
+        print("end concurrent queue.sync 1")
+    }
+    
     //- Async + Concurrent: Tasks run in parallel, and the current thread is not blocked.
 	func concurrent_async() {
 		let queue = DispatchQueue(label: "concurrent_async", attributes: .concurrent)
@@ -305,6 +411,23 @@ its a concurrent queue, thats why? if you used consurrent queue with sync-async 
          ⚪️ ended
 		 */
 	}
+    
+    func concurrent_async_nested() {
+        let queue = DispatchQueue(label: "concurrent_async", attributes: .concurrent)
+        print("start concurrent queue.async 1")
+        queue.async {
+            print("start concurrent queue.async 2")
+            queue.async {
+                print("⚪️ started")
+                for _ in 1...3 {
+                    print("⚪️")
+                }
+                print("⚪️ ended")
+            }
+            print("end concurrent queue.async 2")
+        }
+        print("end concurrent queue.async 1")
+    }
 
 	func concurrent_sync_async() {
 		let queue = DispatchQueue(label: "concurrent_sync_async", attributes: .concurrent)
@@ -343,6 +466,23 @@ its a concurrent queue, thats why? if you used consurrent queue with sync-async 
          ⚪️ ended
 		 */
 	}
+    
+    func concurrent_sync_async_nested() {
+        let queue = DispatchQueue(label: "concurrent_sync_async", attributes: .concurrent)
+        print("start concurrent queue.sync 1")
+        queue.sync {
+            print("start concurrent queue.async 2")
+            queue.async {
+                print("⚪️ started")
+                for _ in 1...3 {
+                    print("⚪️")
+                }
+                print("⚪️ ended")
+            }
+            print("end concurrent queue.async 2")
+        }
+        print("end concurrent queue.sync 1")
+    }
 
 	func concurrent_async_sync() {
 		let queue = DispatchQueue(label: "concurrent_async_sync", attributes: .concurrent)
@@ -381,6 +521,23 @@ its a concurrent queue, thats why? if you used consurrent queue with sync-async 
          end concurrent queue.sync 2
 		 */
 	}
+    
+    func concurrent_async_sync_nested() {
+        let queue = DispatchQueue(label: "concurrent_async_sync", attributes: .concurrent)
+        print("start concurrent queue.async 1")
+        queue.async {
+            print("start concurrent queue.sync 2")
+            queue.sync {
+                print("⚪️ started")
+                for _ in 1...3 {
+                    print("⚪️")
+                }
+                print("⚪️ ended")
+            }
+            print("end concurrent queue.sync 2")
+        }
+        print("end concurrent queue.async 1")
+    }
 /*:
  **Type:** DispatchWorkItem is a class in Swift.
  
@@ -758,23 +915,32 @@ its a concurrent queue, thats why? if you used consurrent queue with sync-async 
 }
 
 var d1 = Demo()
-d1.callMainThread()
-d1.callBackgroundThread()
-d1.serial_sync()
-d1.serial_async()
-d1.serial_sync_async()
-d1.serial_async_sync()
-d1.concurrent_sync()
-d1.concurrent_async()
-d1.concurrent_sync_async()
-d1.concurrent_async_sync()
-d1.dispatch_work_item()
-d1.dispatch_work_item_cancel()
-d1.dispatch_group()
-d1.dispatch_group_and_nested_closure()
-d1.dispatch_semaphore()
-d1.priority_inversion_with_dispatch_semaphone()
-d1.deadLock_with_dispatch_semaphone()
+//d1.callMainThread()
+//d1.callBackgroundThread()
+//d1.serial_sync()
+//d1.serial_sync_nested() //crash
+//d1.serial_async()
+//d1.serial_async_nested()
+//d1.serial_sync_async()
+//d1.serial_sync_async_nested()
+//d1.serial_async_sync()
+//d1.serial_async_sync_nested() //crash
+//d1.concurrent_sync()
+//d1.concurrent_sync_nested()
+//d1.multiple_concurrent_sync()
+//d1.concurrent_async()
+//d1.concurrent_async_nested()
+//d1.concurrent_sync_async()
+//d1.concurrent_sync_async_nested()
+//d1.concurrent_async_sync()
+//d1.concurrent_async_sync_nested()
+//d1.dispatch_work_item()
+//d1.dispatch_work_item_cancel()
+//d1.dispatch_group()
+//d1.dispatch_group_and_nested_closure()
+//d1.dispatch_semaphore()
+//d1.priority_inversion_with_dispatch_semaphone()
+//d1.deadLock_with_dispatch_semaphone()
 //d1.actor()
 
 PlaygroundPage.current.needsIndefiniteExecution = true
