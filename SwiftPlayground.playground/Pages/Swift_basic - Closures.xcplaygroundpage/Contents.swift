@@ -31,8 +31,19 @@ someFunctionThatTakesAClosure() { status in
 		// trailing closure's body goes here
     print(status)
 }
-
-/*: 
+import Foundation
+var savedRequests: [DispatchWorkItem] = []
+someFunction {
+    print("1")
+}
+func someFunction(handler: @escaping ()->()) {
+    print("2")
+    savedRequests.append(DispatchWorkItem {
+        handler()
+    })
+    print("3")
+}
+/*:
  ## Capturing Values
  - **Capturing Values:** Closures can capture and store references to constants and variables from the context in which they are defined. This allows the closure to refer to and modify these values even after the original scope has ended.
 
@@ -89,10 +100,15 @@ var completionHandlers: [() -> Void] = []
 func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
     completionHandlers.append(completionHandler)
 }
+someFunctionWithEscapingClosure(completionHandler: {
+    
+})
 func someFunctionWithNonescapingClosure(closure: () -> Void) {
 	closure()
 }
-
+someFunctionWithNonescapingClosure(closure: {
+    
+})
 class SomeClass {
 	var x = 10
     var y = 10
