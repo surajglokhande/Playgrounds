@@ -5,6 +5,8 @@
  - They hide the implementation details and expose only the behavior that complies with the protocol.
  - They help improve the type safety of your Swift code.
  - They allow you to use generic code and still return specific types.
+ - **Some** keyword is used for opaque types, where the concrete type conforming to the protocol is hidden, prefer some for static dispatch and type safety.
+ - **any** is used for existential types, which can hold any concrete type conforming to the protocol. Generally, any for dynamic, heterogeneous collections or when you need to erase type information.
  */
 protocol AppendValue {
 	associatedtype item
