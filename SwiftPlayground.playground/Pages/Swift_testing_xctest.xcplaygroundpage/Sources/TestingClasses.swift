@@ -1,5 +1,7 @@
 
-
+enum CustomError: Error {
+    case someError
+}
 public class ProblematicService {
     
     public init() {
@@ -7,7 +9,7 @@ public class ProblematicService {
     }
     
     public func doSomethingThatMightFail(_ error : (_: Error?) -> Void) {
-        var e: Error?
+        let e : Error? = CustomError.someError
         error(e)
     }
     public func startStreaming(_ chunck : (_: String) -> Void) {
