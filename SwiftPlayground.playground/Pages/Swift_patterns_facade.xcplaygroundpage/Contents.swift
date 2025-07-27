@@ -1,8 +1,15 @@
 //: [Previous](@previous)
 /*:
- The Facade pattern provides a simplified interface to a complex subsystem. It hides the complexities of the underlying system from the client, making it easier to use.
+**When to use it:**
 
- Scenario: Imagine building a "Smart Home" app where you want a single button to "Start Movie Night" or "End Movie Night." This involves coordinating several different devices (subsystems) like a TV, a sound system, and smart lights.
+ - When you want to provide a simple interface to a complex subsystem.
+ - When you want to decouple a client from the implementation of a subsystem.
+ - When you want to layer your system, with the Facade acting as an entry point to each layer.
+
+ **Scenario:** Imagine building a "Smart Home" app where you want a single button to "Start Movie Night" or "End Movie Night." This involves coordinating several different devices (subsystems) like a TV, a sound system, and smart lights.
+ */
+/*:
+    Example One
  */
 import Foundation // For basic types
 import UIKit // For UI example if used in a ViewController
@@ -231,4 +238,108 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
  print("\n------------------------------\n")
 
  myHomeTheater.playMusic()
+/*:
+    Example Two
+ */
+// MARK: - Subsystem Components
+
+class AudioSession {
+    func configureAudioSession() {
+        print("AudioSession: Configuring audio session settings.")
+        // Complex logic for setting up audio session
+    }
+
+    func activateAudioSession() {
+        print("AudioSession: Activating audio session.")
+        // Complex logic for activating
+    }
+
+    func deactivateAudioSession() {
+        print("AudioSession: Deactivating audio session.")
+        // Complex logic for deactivating
+    }
+}
+
+class AudioInput {
+    func setupMicrophoneInput() {
+        print("AudioInput: Setting up microphone input.")
+        // Complex logic for microphone setup
+    }
+
+    func calibrateInput() {
+        print("AudioInput: Calibrating audio input levels.")
+        // Complex logic for calibration
+    }
+}
+
+class SoundPlayer {
+    func loadSoundFile(named fileName: String) {
+        print("SoundPlayer: Loading sound file: \(fileName).")
+        // Complex logic for loading sound
+    }
+
+    func play() {
+        print("SoundPlayer: Playing sound.")
+        // Complex logic for playing sound
+    }
+
+    func stop() {
+        print("SoundPlayer: Stopping sound.")
+        // Complex logic for stopping sound
+    }
+}
+// MARK: - Facade
+
+class AudioManagerFacade {
+    private let audioSession: AudioSession
+    private let audioInput: AudioInput
+    private let soundPlayer: SoundPlayer
+
+    init() {
+        self.audioSession = AudioSession()
+        self.audioInput = AudioInput()
+        self.soundPlayer = SoundPlayer()
+    }
+
+    // Simplified interface for playing a sound
+    func playSound(fileName: String) {
+        print("\nAudioManagerFacade: Preparing to play sound '\(fileName)'...")
+        audioSession.configureAudioSession()
+        audioSession.activateAudioSession()
+        audioInput.setupMicrophoneInput() // Maybe needed for recording, or just general audio setup
+        soundPlayer.loadSoundFile(named: fileName)
+        soundPlayer.play()
+        print("AudioManagerFacade: Sound playback initiated for '\(fileName)'.")
+    }
+
+    // Simplified interface for stopping sound and cleaning up
+    func stopSoundAndCleanup() {
+        print("\nAudioManagerFacade: Stopping sound and cleaning up...")
+        soundPlayer.stop()
+        audioSession.deactivateAudioSession()
+        print("AudioManagerFacade: Cleanup complete.")
+    }
+
+    // Another high-level operation
+    func recordAudio() {
+        print("\nAudioManagerFacade: Preparing to record audio...")
+        audioSession.configureAudioSession()
+        audioSession.activateAudioSession()
+        audioInput.setupMicrophoneInput()
+        audioInput.calibrateInput()
+        print("AudioManagerFacade: Audio recording setup complete.")
+    }
+}
+// MARK: - Client Usage
+
+let audioManager = AudioManagerFacade()
+
+// Client can now play a sound with a single method call
+audioManager.playSound(fileName: "background_music.mp3")
+
+// And stop/cleanup with another single call
+audioManager.stopSoundAndCleanup()
+
+// Or record audio
+audioManager.recordAudio()
 //: [Next](@next)
