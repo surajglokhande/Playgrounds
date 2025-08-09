@@ -34,12 +34,12 @@ Carthage/Build/
 DerivedData/
 
 ## Playgrounds
-*.playground/
-!*.playground/Contents.swift # Keep the actual playground source code
-!*.playground/Resources/    # Keep any resources within the playground
-*.playground/xcuserdata/
-*.playground/playground.xcworkspace/
-*.playground/timeline.xctimeline
+#*.playground/
+#!*.playground/Contents.swift # Keep the actual playground source code
+#!*.playground/Resources/    # Keep any resources within the playground
+#*.playground/xcuserdata/
+#*.playground/playground.xcworkspace/
+#*.playground/timeline.xctimeline
 
 ## User-specific / Temporary
 .DS_Store
