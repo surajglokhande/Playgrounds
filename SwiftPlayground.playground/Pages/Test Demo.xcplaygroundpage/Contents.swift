@@ -227,7 +227,37 @@ func runNestedSyncToDifferentQueue() {
     print("[\(Date())] Main Thread: Overall process finished.")
 }
 
-runNestedSyncToDifferentQueue()
+//runNestedSyncToDifferentQueue()
+
+struct MonetaryAmount: Equatable { // struct by default promotes value semantics
+    let amount: Decimal
+    let currencyCode: String
+
+    // Custom initializer for validation or specific creation
+    init?(amount: Decimal, currencyCode: String) {
+        guard amount >= 0 else { return nil } // Example validation
+        self.amount = amount
+        self.currencyCode = currencyCode.uppercased()
+    }
+
+    // Example of behavior on the Value Object
+    func add(_ other: MonetaryAmount) -> MonetaryAmount? {
+        guard self.currencyCode == other.currencyCode else { return nil } // Must be same currency
+        return MonetaryAmount(amount: self.amount + other.amount, currencyCode: self.currencyCode)
+    }
+}
+
+// Usage
+let priceA = MonetaryAmount(amount: 19.99, currencyCode: "USD")!
+let priceB = MonetaryAmount(amount: 19.99, currencyCode: "USD")!
+let tax = MonetaryAmount(amount: 1.50, currencyCode: "USD")!
+
+print(priceA == priceB) // Output: true (they are equal by value)
+
+if let total = priceA.add(tax) {
+    print("Total price: \(total.amount) \(total.currencyCode)")
+}
+// Output: Total price: 21.49 USD
 
 
 
