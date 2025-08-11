@@ -9,15 +9,26 @@ struct Stack<Element> {
     }
     
     @discardableResult
-    mutating func pop(_ element: Element) -> Element? {
+    mutating func pop() -> Element? {
         storage.popLast()
     }
+    
+    func printStack() {
+        print(storage)
+    }
+    
 }
 var stack = Stack<Int>()
-print(stack.push(1))
-print(stack.push(2))
-print(stack.push(3))
-print(stack.push(4))
+stack.push(1)
+stack.printStack()
+stack.push(2)
+stack.printStack()
+stack.push(3)
+stack.printStack()
+stack.push(4)
+stack.printStack()
+print(stack.pop() ?? 0)
+stack.printStack()
 
 
 //: [Next](@next)

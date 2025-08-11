@@ -466,4 +466,23 @@ func fizzBuzz() {
 }
 //fizzBuzz()
 
+//product of array
+
+func productOfArray(array: [Int]) {
+    
+    var output: [Int] = []
+    for item in array {
+        var count = 1
+        for (index,i) in array.enumerated() {
+            if item != i && (i != 0) {
+                count *= i
+            }
+        }
+        output.append(count)
+    }
+    print(output)
+}
+
+productOfArray(array: [1,2,3,4])
+productOfArray(array: [1,2,0,4])
 //: [Next](@next)
