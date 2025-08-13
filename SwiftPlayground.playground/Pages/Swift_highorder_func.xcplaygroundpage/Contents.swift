@@ -30,10 +30,10 @@ var newArray = arrayPer.filter({
     $0.address?.filter({ $0.addressLine != nil && $0.addressType == "permanent" }).count ?? 0 > 0
 }).map({ $0.name })
 
-print(newArray)
+//print(newArray)
 
 func giveOutput() {
-    let array = [1, 2, 3, nil, 4, 5]
+    var array = [111, 4, 3, nil, 4, 10]
     print(array.map { $0 })  //  = [1,1])
     print(array.compactMap { [$0, $0] })  // = [[Optional(1), Optional(1)], [Optional(2), Optional(2)], [Optional(3), Optional(3)], [nil, nil], [Optional(4), Optional(4)], [Optional(5), Optional(5)]]
     print(array.compactMap { $0 })  // = [1, 2, 3, 4, 5]
@@ -47,6 +47,9 @@ func giveOutput() {
             }
         )
     )
+//    var newarray = array.sort { num1, num2 in
+//        return num1 > num2
+//    }
 }
 giveOutput()
 //: [Next](@next)

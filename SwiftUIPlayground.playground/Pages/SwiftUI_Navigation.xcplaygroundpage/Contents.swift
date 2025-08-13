@@ -7,6 +7,7 @@ struct User: Hashable {
     var name: String
 }
 
+//old
 struct Navigation_view: View {
     var body: some View {
         NavigationStack {
@@ -19,6 +20,7 @@ struct Navigation_view: View {
     }
 }
 
+//new
 struct Navigation_stack: View {
     var body: some View {
         NavigationStack {

@@ -32,11 +32,11 @@ var axisAccount = BankAccountOne(name: "Axis Bank", balance: 10000)
     1st
  */
 class Account {
-    var id: String
+    var id: String = ""
     
-    required init(id: String) {
-        self.id = id
-    }
+//    required init(id: String) {
+//        self.id = id
+//    }
 }
 
 class SavingsAccount: Account {
