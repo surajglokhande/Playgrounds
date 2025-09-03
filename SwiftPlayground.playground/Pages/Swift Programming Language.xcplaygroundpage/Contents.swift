@@ -21,14 +21,15 @@ for character in puzzleInput {
 print(puzzleOutput)
 
 // Print only even numbers
-outerloop: for i in 0..<10 {
+//outerloop: for i in 0..<10 {
     innerloop: for i in 0..<10 {
         if i % 2 != 0 { // If i is odd
-            continue outerloop // Skip the rest of the current iteration and go to the next
+            continue innerloop // Skip the rest of the current iteration and go to the next
         }
         print("\(i) is an even number.")
     }
-}
+//}
+
 /*:
 	break
  */
@@ -52,6 +53,7 @@ outerLoop: for row in 1...3 {
         }
     }
 }
+
 /*:
 	fallthrough
  */
