@@ -375,9 +375,9 @@ struct ReentrancyExample {
         print("--- All tasks complete or timed out ---")
     }
 }
-Task {
-    await ReentrancyExample.main()
-}
+//Task {
+//    await ReentrancyExample.main()
+//}
 //Output:
 //--- Starting Downloads ---
 // Task 1: Requesting download for file1.txt
