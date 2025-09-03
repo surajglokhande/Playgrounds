@@ -1,10 +1,8 @@
-//: [Previous](@previous)
-
-import Foundation
 
 /*:
  //removed dublicate element
  */
+import Foundation
 func arrayFunc() {
     var array = [5,9,7,11,9,11]
     //don't use any predefined function like contains
