@@ -14,4 +14,77 @@
     - **Scope:** Individual functions, methods, or classes.
  
  */
+import XCTest
+import Testing
+extension Tag {
+    @Tag static var price: Self
+    @Tag static var topSuiteOne: Self
+    @Tag static var topSuiteTwo: Self
+    @Tag static var topSuiteThree: Self
+}
+
+@Suite("This is the swift testing Suite one", .tags(.topSuiteOne))
+struct SwiftTesingApp {
+    @Test("", .tags(.price))
+    func testExample() throws {
+        
+        //old
+        #warning("XCTest")
+        let actual = "Hello, World!"
+        let expected = "Hello, World!"
+        XCTAssertEqual(actual, expected, "actual is the same as expected")
+        
+        //new
+        #warning("Swift tesing")
+        #expect(actual == expected)
+    }
+}
+
+@Suite("This is the swift testing Suite Two", .tags(.topSuiteTwo), .serialized)
+struct SwiftTesingTwoApp {
+    @Test
+    func test1() {
+        
+    }
+    @Test
+    func test2() {
+        
+    }
+    @Test
+    func test3() {
+        
+    }
+}
+
+@Suite("This is the swift testing Suite Three", .tags(.topSuiteThree))
+struct SwiftTesingThreeApp {
+    @Test("this is the swift testing with multiple arguments", arguments: [(1, 2), (3, 4), (5, 6)])
+    func test1(paramOne: Int, paramTwo: Int) {
+        #expect(paramOne == paramTwo)
+    }
+}
+
+@Suite("This is the swift testing Suite Four")
+struct SwiftTesingFourApp {
+    @Test
+    func test1() {
+        withKnownIssue("this is a known issue", isIntermittent: true) {
+            #expect(true)
+        }
+    }
+}
+class HeavyTask {
+    func run() {
+        //
+    }
+}
+
+@Suite("This is the swift testing Suite Five")
+struct SwiftTesingFiveApp {
+    @Test(.timeLimit(.minutes(1)))
+    func test1() {
+        let result = HeavyTask().run()
+        #expect(result == .finished)
+    }
+}
 //: [Next](@next)
